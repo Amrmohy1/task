@@ -11,7 +11,7 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: ProductAdapter
+    private  var adapter: ProductAdapter?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,18 +20,17 @@ class MainActivity : AppCompatActivity() {
 
         val myApis =RetrofitClient.retrofit.create(UserApis::class.java)
         val callProduct =myApis.getProducts()
-        callProduct.enqueue(object :Callback<List<productItem>> {
+        recyclerView.adapter=adapter
+        callProduct.enqueue(object :Callback<List<ProductItem>> {
             override fun onResponse(
-                call: Call<List<productItem>>,
-                response: Response<List<productItem>>
+                call: Call<List<ProductItem>>,
+                response: Response<List<ProductItem>>
             ) {
-                val product = response.body()!!
-                adapter =ProductAdapter(this@MainActivity,product)
-                recyclerView.adapter=adapter
+                val product = response.body()
+                adapter = product?.let { ProductAdapter(this@MainActivity, it) }
                 Log.d("massage product", product.toString())
             }
-
-            override fun onFailure(call: Call<List<productItem>>, t: Throwable) {
+            override fun onFailure(call: Call<List<ProductItem>>, t: Throwable) {
                 Log.d("massage product failure",t.message.toString())
             }
         })

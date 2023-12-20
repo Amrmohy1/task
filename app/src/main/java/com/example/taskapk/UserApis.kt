@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface UserApis {
    @GET("products")
-    fun getProducts () :Call<List<productItem>>
+    fun getProducts () :Call<List<ProductItem>>
 }

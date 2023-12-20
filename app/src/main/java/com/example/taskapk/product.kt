@@ -1,3 +1,3 @@
 package com.example.taskapk
 
-class product : ArrayList<productItem>()
+class product : ArrayList<ProductItem>()

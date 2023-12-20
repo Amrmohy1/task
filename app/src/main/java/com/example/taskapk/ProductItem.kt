@@ -1,6 +1,6 @@
 package com.example.taskapk
 
-data class productItem(
+data class ProductItem(
     val category: String,
     val description: String,
     val id: Int,
